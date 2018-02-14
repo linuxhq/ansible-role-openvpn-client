@@ -57,7 +57,7 @@ None
             remote_random: true
             reneg_sec: 0
             route: '10.8.8.0 255.255.255.0'
-            route_noexec: true:
+            route_noexec: true
             route_nopull: true
             resolv_retry: infinite
             script_security: 2
