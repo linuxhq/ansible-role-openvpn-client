@@ -13,7 +13,7 @@
         path: "{{ item }}"
         owner: root
         group: openvpn
-        mode: 0770
+        mode: 0750
         state: directory
       with_items:
         - /etc/openvpn
@@ -25,7 +25,7 @@
         path: "{{ item.path|dirname }}"
         owner: root
         group: openvpn
-        mode: 0770
+        mode: 0750
         state: directory
       with_items: "{{ openvpn_client_scripts }}"
       when:
@@ -38,7 +38,7 @@
         dest: /etc/openvpn/client.conf
         owner: root
         group: openvpn
-        mode: 0660
+        mode: 0640
       notify: restart openvpn-client
 
     - name: Applying openvpn login and password, if applicable.
@@ -47,7 +47,7 @@
         dest: "{{ openvpn_client_options.auth_user_pass }}"
         owner: root
         group: openvpn
-        mode: 0660
+        mode: 0640
       when:
         - openvpn_client_options.auth_user_pass is defined
         - openvpn_client_username is defined
@@ -59,7 +59,7 @@
         dest: "{{ item.path }}"
         owner: root
         group: openvpn
-        mode: 0770
+        mode: 0750
       with_items: "{{ openvpn_client_scripts }}"
       when:
         - openvpn_client_scripts is defined
