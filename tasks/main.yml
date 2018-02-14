@@ -59,7 +59,7 @@
         dest: "{{ item.path }}"
         owner: root
         group: openvpn
-        mode: 0750
+        mode: "{{ item.mode|default(0750) }}"
       with_items: "{{ openvpn_client_scripts }}"
       when:
         - openvpn_client_scripts is defined
