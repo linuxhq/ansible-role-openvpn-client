@@ -1,0 +1,37 @@
+# {{ ansible_managed }}
+
+{% if openvpn_client_options|length > 0 %}
+{% for key, value in openvpn_client_options.iteritems()|sort %}
+{%   set k = key|replace('_', '-') %}
+{%   if value is sameas true %}
+{{ k }}
+{%   else %}
+{{ k }} {{ value }}
+{%   endif %}
+{% endfor %}
+
+{% endif %}
+{% if openvpn_client_ca is defined %}
+<ca>
+{{ openvpn_client_ca }}
+</ca>
+
+{% endif %}
+{% if openvpn_client_cert is defined %}
+<cert>
+{{ openvpn_client_cert }}
+</cert>
+
+{% endif %}
+{% if openvpn_client_key is defined %}
+<key>
+{{ openvpn_client_key }}
+</key>
+
+{% endif %}
+{% if openvpn_client_tls_auth is defined %}
+<tls-auth>
+{{ openvpn_client_tls_auth }}
+</tls-auth>
+
+{% endif %}

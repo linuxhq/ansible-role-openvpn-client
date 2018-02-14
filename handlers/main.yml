@@ -1,0 +1,8 @@
+---
+- name: restart openvpn-client
+  tags: openvpn-client
+  become: true
+  systemd:
+    service: openvpn@client
+    state: restarted
+...

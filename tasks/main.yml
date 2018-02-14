@@ -1,0 +1,77 @@
+---
+- name: Ensure that the openvpn package is installed
+  tags: openvpn-client
+  become: true
+  yum:
+   name: openvpn
+   state: present
+  register: openvpn_client_yum
+
+- block:
+    - name: Hardening openvpn configuration directories
+      file:
+        path: "{{ item }}"
+        owner: root
+        group: openvpn
+        mode: 0770
+        state: directory
+      with_items:
+        - /etc/openvpn
+        - /etc/openvpn/client
+        - /etc/openvpn/server
+
+    - name: Creating scripts directory, if applicable.
+      file:
+        path: "{{ item.path|dirname }}"
+        owner: root
+        group: openvpn
+        mode: 0770
+        state: directory
+      with_items: "{{ openvpn_client_scripts }}"
+      when:
+        - openvpn_client_scripts is defined
+        - item.path is defined
+
+    - name: Applying openvpn client configurations
+      template:
+        src: client.conf.j2
+        dest: /etc/openvpn/client.conf
+        owner: root
+        group: openvpn
+        mode: 0660
+      notify: restart openvpn-client
+
+    - name: Applying openvpn login and password, if applicable.
+      template:
+        src: login.conf.j2
+        dest: "{{ openvpn_client_options.auth_user_pass }}"
+        owner: root
+        group: openvpn
+        mode: 0660
+      when:
+        - openvpn_client_options.auth_user_pass is defined
+        - openvpn_client_username is defined
+        - openvpn_client_password is defined
+
+    - name: Applying openvpn scripts, if applicable.
+      template:
+        src: script.j2
+        dest: "{{ item.path }}"
+        owner: root
+        group: openvpn
+        mode: 0770
+      with_items: "{{ openvpn_client_scripts }}"
+      when:
+        - openvpn_client_scripts is defined
+        - item.path is defined
+        - item.base64 is defined
+
+    - name: Enable and start the openvpn service on boot
+      systemd:
+        enabled: yes
+        service: openvpn@client
+        state: started
+  tags: openvpn-client
+  become: true
+  when: openvpn_client_yum|success
+...
