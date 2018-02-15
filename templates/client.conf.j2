@@ -5,8 +5,12 @@
 {%   set k = key|replace('_', '-') %}
 {%   if value is sameas true %}
 {{ k }}
-{%   else %}
+{%   elif value is string or value is number %}
 {{ k }} {{ value }}
+{%   else %}
+{%     for v in value %}
+{{ k }} {{ v }}
+{%     endfor %}
 {%   endif %}
 {% endfor %}
 
