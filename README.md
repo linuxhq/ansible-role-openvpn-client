@@ -16,6 +16,8 @@ Available variables are listed below, along with default values.
     openvpn_client_key: ''
     openvpn_client_options: {}
     openvpn_client_password: ''
+    openvpn_client_restart: false
+    openvpn_client_restart_sec: 30
     openvpn_client_scripts: []
     openvpn_client_tls_auth: ''
     openvpn_client_username: ''

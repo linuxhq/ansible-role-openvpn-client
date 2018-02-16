@@ -8,7 +8,7 @@
   register: openvpn_client_yum
 
 - block:
-    - name: Hardening openvpn configuration directories
+    - name: Creating openvpn directory tree
       file:
         path: "{{ item }}"
         owner: root
@@ -31,6 +31,17 @@
       when:
         - openvpn_client_scripts is defined
         - item.path is defined
+
+    - name: Creating systemd override directory, if applicable.
+      file:
+        path: '/etc/systemd/system/openvpn@.service.d'
+        owner: root
+        group: root
+        mode: 0755
+        state: directory
+      when:
+        - openvpn_client_restart is defined
+        - openvpn_client_restart|bool
 
     - name: Applying openvpn client configurations
       template:
@@ -65,6 +76,19 @@
         - openvpn_client_scripts is defined
         - item.path is defined
         - item.base64 is defined
+
+    - name: Applying openvpn systemd override, if applicable.
+      template:
+        src: openvpn-client@.conf.j2
+        dest: /etc/systemd/system/openvpn@.service.d/openvpn-client@.conf
+        owner: root
+        group: root
+        mode: 0644
+      notify: reload systemd 
+      when:
+        - openvpn_client_restart is defined
+        - openvpn_client_restart_sec is defined
+        - openvpn_client_restart|bool
 
     - name: Enable and start the openvpn service on boot
       systemd:
