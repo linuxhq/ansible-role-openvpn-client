@@ -84,7 +84,7 @@
         owner: root
         group: root
         mode: 0644
-      notify: reload systemd 
+      notify: reload systemd
       when:
         - openvpn_client_restart is defined
         - openvpn_client_restart_sec is defined
