@@ -1,6 +1,4 @@
 ---
 openvpn_client_options: {}
-openvpn_client_restart: false
-openvpn_client_restart_sec: 30
-openvpn_client_scripts: []
+openvpn_client_systemd: {}
 ...

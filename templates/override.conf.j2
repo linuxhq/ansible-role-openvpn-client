@@ -1,3 +1,9 @@
-[Service]
-Restart=always
-RestartSec={{ openvpn_client_restart_sec }}
+{% for section in openvpn_client_systemd|sort %}
+[{{ section|capitalize }}]
+{%   for key, value in openvpn_client_systemd[section].iteritems()|sort %}
+{{ key }}={{ value }}
+{%   endfor %}
+{%   if not loop.last %}
+
+{%   endif %}
+{% endfor %}
