@@ -34,7 +34,7 @@
 
     - name: Creating systemd override directory, if applicable.
       file:
-        path: '/etc/systemd/system/openvpn@.service.d'
+        path: /etc/systemd/system/openvpn@client.service.d
         owner: root
         group: root
         mode: 0755
@@ -80,7 +80,7 @@
     - name: Applying openvpn systemd override, if applicable.
       template:
         src: override.conf.j2
-        dest: /etc/systemd/system/openvpn@.service.d/override.conf
+        dest: /etc/systemd/system/openvpn@client.service.d/override.conf
         owner: root
         group: root
         mode: 0644
