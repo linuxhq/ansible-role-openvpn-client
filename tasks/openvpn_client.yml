@@ -39,9 +39,8 @@
     owner: root
     group: openvpn
     mode: 0640
-  notify: restart openvpn-client
-  when:
-    - openvpn_client_yum is success
+  notify: restart openvpn@client
+  when: openvpn_client_yum is success
 
 - name: Attempting to overlay openvpn@client username and password, if applicable
   no_log: true
@@ -51,6 +50,7 @@
     owner: root
     group: openvpn
     mode: 0640
+  notify: restart openvpn@client
   when:
     - openvpn_client_options.auth_user_pass is defined
     - openvpn_client_username is defined
@@ -65,6 +65,7 @@
     owner: root
     group: openvpn
     mode: "{{ item.mode|default(0750) }}"
+  notify: restart openvpn@client
   with_items: "{{ openvpn_client_scripts }}"
   when:
     - item.base64 is defined
@@ -77,6 +78,5 @@
     enabled: yes
     service: openvpn@client
     state: started
-  when:
-    - openvpn_client_yum is success
+  when: openvpn_client_yum is success
 ...

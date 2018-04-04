@@ -17,6 +17,6 @@
     mode: 0644
   notify:
     - reload systemd
-    - restart openvpn-client
+    - restart openvpn@client
   when: openvpn_client_systemd|length > 0
 ...
