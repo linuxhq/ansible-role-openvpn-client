@@ -15,8 +15,13 @@
     owner: root
     group: root
     mode: 0644
-  notify:
-    - reload systemd
-    - restart openvpn@client
+  notify: reload systemd
   when: openvpn_client_systemd|length > 0
+
+- name: Ensure that openvpn@client is started and enabled on boot
+  systemd:
+    enabled: yes
+    service: openvpn@client
+    state: started
+  when: openvpn_client_yum is success
 ...

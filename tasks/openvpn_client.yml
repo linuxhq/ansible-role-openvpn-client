@@ -72,11 +72,4 @@
     - item.path is defined
     - openvpn_client_scripts is defined
     - openvpn_client_yum is success
-
-- name: Ensure that openvpn@client is started and enabled on boot
-  systemd:
-    enabled: yes
-    service: openvpn@client
-    state: started
-  when: openvpn_client_yum is success
 ...
