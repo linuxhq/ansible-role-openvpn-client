@@ -1,4 +1,5 @@
 ---
 openvpn_client_options: {}
+openvpn_client_scripts: []
 openvpn_client_systemd: {}
 ...

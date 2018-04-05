@@ -6,7 +6,9 @@
     group: root
     mode: 0755
     state: directory
-  when: openvpn_client_systemd|length > 0
+  when:
+    - openvpn_client_systemd|length > 0
+    - openvpn_client_yum is success
 
 - name: Attempting to overlay openvpn@client systemd override, if applicable
   template:
@@ -16,7 +18,9 @@
     group: root
     mode: 0644
   notify: reload systemd
-  when: openvpn_client_systemd|length > 0
+  when:
+    - openvpn_client_systemd|length > 0
+    - openvpn_client_yum is success
 
 - name: Ensure that openvpn@client is started and enabled on boot
   systemd:

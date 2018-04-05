@@ -28,7 +28,7 @@
   with_items: "{{ openvpn_client_scripts }}"
   when:
     - item.path is defined
-    - openvpn_client_scripts is defined
+    - openvpn_client_scripts|length > 0
     - openvpn_client_yum is success
 
 - name: Attempting to overlay openvpn@client configuration
@@ -40,7 +40,9 @@
     group: openvpn
     mode: 0640
   notify: restart openvpn@client
-  when: openvpn_client_yum is success
+  when:
+    - openvpn_client_options|length > 0
+    - openvpn_client_yum is success
 
 - name: Attempting to overlay openvpn@client username and password, if applicable
   no_log: true
@@ -70,6 +72,6 @@
   when:
     - item.base64 is defined
     - item.path is defined
-    - openvpn_client_scripts is defined
+    - openvpn_client_scripts|length > 0
     - openvpn_client_yum is success
 ...

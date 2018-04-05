@@ -13,6 +13,7 @@ None
 Available variables are listed below, along with default values.
 
     openvpn_client_options: {}
+    openvpn_client_scripts: []
     openvpn_client_systemd: {}
 
 Additional variables are listed below, not defined by default.
@@ -20,7 +21,6 @@ Additional variables are listed below, not defined by default.
     openvpn_client_ca: ''
     openvpn_client_key: ''
     openvpn_client_password: ''
-    openvpn_client_scripts: []
     openvpn_client_tls_auth: ''
     openvpn_client_username: ''
 
