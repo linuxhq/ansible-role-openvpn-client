@@ -1,0 +1,34 @@
+---
+- name: Attempting to overlay openvpn@client directory tree
+  file:
+    path: "{{ item }}"
+    owner: root
+    group: openvpn
+    mode: 0750
+    state: directory
+  with_items:
+    - /etc/openvpn
+    - /etc/openvpn/client
+
+- name: Attempting to overlay openvpn@client scripts directory, if applicable
+  no_log: true
+  file:
+    path: "{{ item.path|dirname }}"
+    owner: root
+    group: openvpn
+    mode: 0750
+    state: directory
+  with_items: "{{ openvpn_client_scripts }}"
+  when:
+    - item.path is defined
+    - openvpn_client_scripts|length > 0
+
+- name: Attempting to overlay openvpn@client systemd override directory, if applicable
+  file:
+    path: /etc/systemd/system/openvpn@client.service.d
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+  when: openvpn_client_systemd|length > 0
+...

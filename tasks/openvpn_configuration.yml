@@ -1,36 +1,4 @@
 ---
-- name: Ensure that the openvpn package is installed
-  yum:
-   name: openvpn
-   state: present
-  register: openvpn_client_yum
-
-- name: Attempting to overlay openvpn@client directory tree
-  file:
-    path: "{{ item }}"
-    owner: root
-    group: openvpn
-    mode: 0750
-    state: directory
-  with_items:
-    - /etc/openvpn
-    - /etc/openvpn/client
-  when: openvpn_client_yum is success
-
-- name: Attempting to overlay openvpn@client scripts directory, if applicable
-  no_log: true
-  file:
-    path: "{{ item.path|dirname }}"
-    owner: root
-    group: openvpn
-    mode: 0750
-    state: directory
-  with_items: "{{ openvpn_client_scripts }}"
-  when:
-    - item.path is defined
-    - openvpn_client_scripts|length > 0
-    - openvpn_client_yum is success
-
 - name: Attempting to overlay openvpn@client configuration
   no_log: true
   template:
@@ -39,10 +7,9 @@
     owner: root
     group: openvpn
     mode: 0640
+  register: openvpn_client_template
   notify: restart openvpn@client
-  when:
-    - openvpn_client_options|length > 0
-    - openvpn_client_yum is success
+  when: openvpn_client_options|length > 0
 
 - name: Attempting to overlay openvpn@client username and password, if applicable
   no_log: true
@@ -57,7 +24,6 @@
     - openvpn_client_options.auth_user_pass is defined
     - openvpn_client_username is defined
     - openvpn_client_password is defined
-    - openvpn_client_yum is success
 
 - name: Attempting to overlay openvpn@client scripts, if applicable
   no_log: true
@@ -73,5 +39,14 @@
     - item.base64 is defined
     - item.path is defined
     - openvpn_client_scripts|length > 0
-    - openvpn_client_yum is success
+
+- name: Attempting to overlay openvpn@client systemd override, if applicable
+  template:
+    src: override.conf.j2
+    dest: /etc/systemd/system/openvpn@client.service.d/override.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: reload systemd
+  when: openvpn_client_systemd|length > 0
 ...

@@ -1,0 +1,8 @@
+---
+- name: Ensure that openvpn@client is started and enabled on boot
+  service:
+    enabled: yes
+    service: openvpn@client
+    state: started
+  when: openvpn_client_template is success
+...

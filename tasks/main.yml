@@ -1,9 +1,18 @@
 ---
+- name: Ensure that the openvpn package is installed
+  tags: openvpn-client
+  become: true
+  yum:
+   name: openvpn
+   state: present
+  register: openvpn_client_yum
+
 - name: Attempting to import openvpn@client tasks
   tags: openvpn-client
   become: true
   block:
-    - import_tasks: openvpn_client.yml
-    - import_tasks: openvpn_systemd.yml
-  when: ansible_os_family == 'RedHat'
+    - import_tasks: openvpn_directories.yml
+    - import_tasks: openvpn_configuration.yml
+    - import_tasks: openvpn_service.yml
+  when: openvpn_client_yum is success
 ...
