@@ -4,5 +4,7 @@
     enabled: yes
     service: openvpn@client
     state: started
-  when: openvpn_client_template is success
+  when:
+    - openvpn_client_options|length > 0
+    - openvpn_client_template is success
 ...
