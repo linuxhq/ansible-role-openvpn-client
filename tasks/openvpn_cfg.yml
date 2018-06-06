@@ -1,6 +1,7 @@
 ---
 - name: Attempting to overlay tun modules-load.d configuration
   lineinfile:
+    create: true
     line: tun
     path: /etc/modules-load.d/tun.conf
     owner: root
