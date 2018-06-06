@@ -1,4 +1,13 @@
 ---
+- name: Attempting to overlay tun modules-load.d configuration
+  lineinfile:
+    line: tun
+    path: /etc/modules-load.d/tun.conf
+    owner: root
+    group: root
+    mode: 0600
+    state: present
+
 - name: Attempting to overlay openvpn@client configuration
   no_log: true
   template:

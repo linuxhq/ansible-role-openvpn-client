@@ -11,8 +11,8 @@
   tags: openvpn-client
   become: true
   block:
-    - import_tasks: openvpn_directories.yml
-    - import_tasks: openvpn_configuration.yml
-    - import_tasks: openvpn_service.yml
+    - import_tasks: openvpn_dir.yml
+    - import_tasks: openvpn_cfg.yml
+    - import_tasks: openvpn_svc.yml
   when: openvpn_client_yum is success
 ...
