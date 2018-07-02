@@ -1,6 +1,7 @@
 ---
 dependencies: []
 galaxy_info:
+  role_name: openvpn_client
   author: tkimball83
   description: RHEL/CentOS - The Open Source VPN (client)
   license: GPLv3

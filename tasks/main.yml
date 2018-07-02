@@ -1,6 +1,6 @@
 ---
 - name: Ensure that the openvpn package is installed
-  tags: openvpn-client
+  tags: openvpn_client
   become: true
   yum:
    name: openvpn
@@ -8,7 +8,7 @@
   register: openvpn_client_yum
 
 - name: Attempting to import openvpn@client tasks
-  tags: openvpn-client
+  tags: openvpn_client
   become: true
   block:
     - import_tasks: openvpn_dir.yml

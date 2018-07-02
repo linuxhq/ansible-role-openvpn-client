@@ -1,7 +1,7 @@
-# ansible-role-openvpn-client
+# ansible-role-openvpn_client
 
-[![Build Status](https://travis-ci.org/linuxhq/ansible-role-openvpn-client.svg?branch=master)](https://travis-ci.org/linuxhq/ansible-role-openvpn-client)
-[![Ansible Galaxy](https://img.shields.io/badge/ansible--galaxy-openvpn--client-blue.svg?style=flat)](https://galaxy.ansible.com/linuxhq/openvpn-client)
+[![Build Status](https://travis-ci.org/linuxhq/ansible-role-openvpn_client.svg?branch=master)](https://travis-ci.org/linuxhq/ansible-role-openvpn_client)
+[![Ansible Galaxy](https://img.shields.io/badge/ansible--galaxy-openvpn_client-blue.svg?style=flat)](https://galaxy.ansible.com/linuxhq/openvpn_client)
 [![License](https://img.shields.io/badge/license-GPLv3-brightgreen.svg?style=flat)](COPYING)
 
 RHEL/CentOS - The Open Source VPN (client)
@@ -34,7 +34,7 @@ None
 
     - hosts: servers
       roles:
-        - role: linuxhq.openvpn-client
+        - role: linuxhq.openvpn_client
           openvpn_client_ca: |
             -----BEGIN CERTIFICATE-----
             MIIFozCCA4ugAwIBAgIBATANBgkqhkiG9w0BAQ0FADBAMQswCQYDVQQGEwJDSDEV

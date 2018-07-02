@@ -1,13 +1,13 @@
 ---
 - name: restart openvpn@client
-  tags: openvpn-client
+  tags: openvpn_client
   become: true
   systemd:
     service: openvpn@client
     state: restarted
 
 - name: reload systemd
-  tags: openvpn-client
+  tags: openvpn_client
   become: true
   systemd:
     daemon_reload: yes
